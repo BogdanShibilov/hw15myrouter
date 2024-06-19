@@ -29,9 +29,14 @@ func main() {
 	group.AddSubgroup(medium2)
 
 	fourth := myrouter.NewChain(Middleware1).Endpoint(Fourth)
-	inner := myrouter.NewGroup("/inner")
-	inner.Get("/fourth", fourth)
-	medium1.AddSubgroup(inner)
+	inner1 := myrouter.NewGroup("/inner1")
+	inner1.Get("/fourth", fourth)
+	inner1.Get("/fifth", Fifth)
+	medium1.AddSubgroup(inner1)
+
+	inner2 := myrouter.NewGroup("/inner2")
+	inner2.Get("/first", First)
+	medium2.AddSubgroup(inner2)
 
 	r.AddRouterGroup(group)
 	srv := http.Server{
@@ -63,6 +68,12 @@ func Fourth(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte("Fourth endpoint\n"))
 	fmt.Println("Reached fourth endpoint")
+}
+
+func Fifth(w http.ResponseWriter, _ *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte("Fifth endpoint\n"))
+	fmt.Println("Reached fifth endpoint")
 }
 
 func PostIt(w http.ResponseWriter, _ *http.Request) {

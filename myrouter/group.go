@@ -22,6 +22,7 @@ func NewGroup(prefix string) *RouterGroup {
 }
 
 func (g *RouterGroup) AddSubgroup(sg *RouterGroup) {
+	sg.mwChain.AddMiddleware(g.mwChain.mw...)
 	g.subgroups = append(g.subgroups, sg)
 }
 

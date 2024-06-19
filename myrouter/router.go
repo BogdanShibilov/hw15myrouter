@@ -3,7 +3,13 @@ package myrouter
 import "net/http"
 
 type Router struct {
-	http.ServeMux
+	*http.ServeMux
+}
+
+func NewRouter() *Router {
+	return &Router{
+		ServeMux: http.NewServeMux(),
+	}
 }
 
 func (r *Router) Get(path string, h http.HandlerFunc) {

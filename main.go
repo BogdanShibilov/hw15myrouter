@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	r := &myrouter.Router{}
+	r := myrouter.NewRouter()
 
 	postIt := myrouter.NewChain(Middleware1, Middleware2).Endpoint(PostIt)
 	r.Post("/post", postIt)
